@@ -1,0 +1,32 @@
+kind: mapping
+version: v1
+spec:
+  dataSources:
+    - name: mva
+      kind: rest
+      service: manual-activity
+      rest:
+        request:
+          method: get
+          resource: /<userID>/<activity_type>
+        params:
+          - name: userID
+            expression: vector.userID
+          - name: activity_type
+            value: ekyc
+  dataSinks:
+    - name: vector
+      kind: vector
+    - name: customer_info
+      kind: state
+  mapping:
+    kind: jq
+    jq: |
+      {
+        "vector": {
+          "cuid": .mva.[0]?.data.persons[0].cuid
+        },
+        "customer_info": {
+          "name": .mva.[0]?.data.persons[0].surname
+        }
+      }

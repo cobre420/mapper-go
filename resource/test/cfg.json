@@ -1,0 +1,11 @@
+{
+  "services": [
+    {
+      "name": "mva",
+      "host": "http://localhost:8080",
+      "prefix": "/rest/v1/mv",
+      "user": null,
+      "password": null
+    }
+  ]
+}
