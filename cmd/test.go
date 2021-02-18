@@ -17,20 +17,17 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/cobre420/mapper-go/domain"
-	log "github.com/sirupsen/logrus"
+	"github.com/cobre420/mapper-go/service"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
 )
 
 var mappingFile string
 var configFile string
 
-// testCmd represents the test command
-var testCmd = &cobra.Command{
-	Use:   "test",
-	Short: "execute test run of mapping file",
+// testCmd represents the _test command
+var TestCmd = &cobra.Command{
+	Use:   "_test",
+	Short: "execute _test run of mapping file",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -38,29 +35,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("test called")
+		fmt.Println("_test called")
 
-		log.Infof("Mapping file=%s", mappingFile)
-		log.Infof("Config file=%s", configFile)
+		//log.Infof("Mapping file=%s", mappingFile)
+		//log.Infof("Config file=%s", configFile)
 
-		m := domain.Mapping{}
-
-		err := loadYamlFile(&m, mappingFile)
-		if err != nil {
-			panic(err)
-		}
-
-		log.Infof("Loaded %v", m)
+		service.ProcessMapping(configFile, mappingFile)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(testCmd)
+	rootCmd.AddCommand(TestCmd)
 
-	rootCmd.PersistentFlags().StringVar(&mappingFile, "mappingFile", "", "mapping file")
-	rootCmd.PersistentFlags().StringVar(&configFile, "configFile", "", "config file")
-
-
+	rootCmd.PersistentFlags().StringVar(&mappingFile, "mapping-file", "", "mapping file")
+	rootCmd.PersistentFlags().StringVar(&configFile, "config-file", "", "config file")
 
 	// Here you will define your flags and configuration settings.
 
@@ -72,35 +60,3 @@ func init() {
 	// is called directly, e.g.:
 	// testCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-func loadYamlFile(out interface{}, resourceFile string) error {
-	data, err := ioutil.ReadFile(resourceFile)
-	if err != nil {
-		panic(err)
-	}
-	return yaml.Unmarshal(data, out)
-}
-
-//func loadFile(name, fileName string) *viper.Viper {
-//	result := viper.New()
-//
-//	result.SetConfigName(name)
-//	result.SetConfigFile(fileName)
-//
-//	mapping := domain.Mapping{}
-//	err := result.Unmarshal(&mapping, func(config *mapstructure.DecoderConfig){
-//		config.TagName = "yaml"
-//	})
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	log.Infof("Mapping struct %v", mapping)
-//
-//	err = result.ReadInConfig()
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	return result
-//}

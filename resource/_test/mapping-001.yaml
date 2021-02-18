@@ -11,7 +11,7 @@ spec:
           resource: /<userID>/<activity_type>
         params:
           - name: userID
-            expression: vector.userID
+            expression: vector.customer.cuid
           - name: activity_type
             value: ekyc
   dataSinks:

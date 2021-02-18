@@ -1,0 +1,38 @@
+kind: mapping
+version: v1
+spec:
+  dataSources:
+    - name: mvb
+      kind: rest
+      service: manual-activity
+      rest:
+        request:
+          method: post
+          resource: /<userID>/<activity_type>
+        body: |
+          {
+            "firstname": "Karel",
+            "lastname": "Jahoda",
+            "dateofbirth": "2012-03-19T07:22Z"
+          }
+        params:
+          - name: userID
+            value: jahoda
+          - name: vector.activity.type
+            expression:
+  dataSinks:
+    - name: vector
+      kind: vector
+    - name: customer_info
+      kind: state
+  mapping:
+    kind: jq
+    jq: |
+      {
+        "vector": {
+          "cuid": .mva.[0]?.data.persons[0].cuid
+        },
+        "customer_info": {
+          "name": .mva.[0]?.data.persons[0].surname
+        }
+      }

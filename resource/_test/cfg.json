@@ -1,0 +1,32 @@
+{
+  "services": [
+    {
+      "name": "mva",
+      "host": "http://localhost:8000",
+      "prefix": "/rest/v1",
+      "user": null,
+      "password": null
+    },
+    {
+      "name": "mvb",
+      "host": "http://localhost:8000",
+      "prefix": "/rest/v1",
+      "user": null,
+      "password": null
+    },
+    {
+      "name": "mvc",
+      "host": "http://localhost:8000",
+      "prefix": "/rest/v1/sampleput",
+      "user": null,
+      "password": null
+    },
+    {
+      "name": "mvd",
+      "host": "http://localhost:8000",
+      "prefix": "/rest/v1/sampledelete",
+      "user": null,
+      "password": null
+    }
+  ]
+}

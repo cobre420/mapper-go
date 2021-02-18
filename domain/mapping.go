@@ -7,12 +7,12 @@ type Mapping struct {
 }
 
 type spec struct {
-	DataSources *[]dataSource `yaml:"dataSources"`
+	DataSources *[]DataSource `yaml:"dataSources"`
 	DataSinks   *[]dataSink   `yaml:"dataSinks"`
-	Mapping     *mapping    `yaml:"mapping"`
+	Mapping     *mapping      `yaml:"mapping"`
 }
 
-type dataSource struct {
+type DataSource struct {
 	Kind    string `yaml:"kind"`
 	Name    string `yaml:"name"`
 	Service string `yaml:"service"`
@@ -20,7 +20,8 @@ type dataSource struct {
 }
 type rest struct {
 	Request request  `yaml:"request"`
-	Params  *[]param `yaml:"params"`
+	Body    string   `yaml:"body"`
+	Params  *[]Param `yaml:"params"`
 }
 
 type request struct {
@@ -28,7 +29,7 @@ type request struct {
 	Resource string `yaml:"resource"`
 }
 
-type param struct {
+type Param struct {
 	Name       string `yaml:"name"`
 	Value      string `yaml:"value"`
 	Expression string `yaml:"expression"`
